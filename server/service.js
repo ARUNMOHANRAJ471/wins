@@ -62,6 +62,7 @@ let setupRESTRoutes = function(app) {
       let placesArr = [];
       for (var i = 0; i < locationsData.length; i++) {
         let dataForPlace = 'Tower '+locationsData[i].tower+', floor '+locationsData[i].floor+', '+locationsData[i].room;
+        console.log(dataForPlace);
         placesArr.push({key:dataForPlace,text:dataForPlace,value:dataForPlace});
         if(locationsData.length-1 == i) {
           res.send(placesArr);

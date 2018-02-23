@@ -5,6 +5,7 @@ import MarkerComponent from './markerComponent.jsx';
 import Cookies from 'universal-cookie';
 import GoogleMapSME from './googleMapSME.jsx';
 const cookies = new Cookies();
+import GoogleMapNavigation from './googleMapNavigation.jsx';
 
 let typeOptions = [
   {key:"places",text:"places",value:"places"},
@@ -46,7 +47,8 @@ class App extends Component {
       latitude: "",
       longitude: "",
       homeView:true,
-      navigationView:false,
+      placesNavigationView:false,
+      personsNavigationView: false,
       SMEView:false
     };
     this.getDestinationCoordinates = this.getDestinationCoordinates.bind(this);
@@ -64,7 +66,7 @@ class App extends Component {
         currentLocation = {lat: latitude, lng: longitude};
         context.setState({currentLocation:{ lat: 12.8367416, lng: 77.6569854}});
       });
-      console.log(this.state.currentLocation);
+      // console.log(this.state.currentLocation);
     } else {
       console.log('not available');
     }
@@ -73,9 +75,24 @@ class App extends Component {
     if(this.state.typeOfDestination == 'SME') {
         this.setState({
           SMEView:true,
-          navigationView:false,
+          placesNavigationView: false,
+          personsNavigationView: false,
           homeView:false
-        })
+        });
+    } else if(this.state.typeOfDestination == 'places') {
+      this.setState({
+        SMEView: false,
+        placesNavigationView: true,
+        personsNavigationView: false,
+        homeView: false
+      });
+    } else if(this.state.typeOfDestination == 'persons') {
+      this.setState({
+        SMEView: false,
+        placesNavigationView: false,
+        personsNavigationView: true,
+        homeView: false
+      });
     }
   }
   getLocation() {
@@ -83,7 +100,7 @@ class App extends Component {
     if("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(function(position) {
         let { latitude, longitude } = position.coords;
-        console.log("current location captured",latitude, longitude);
+        // console.log("current location captured",latitude, longitude);
         context.setState({ latitude, longitude });
       });
     } else {
@@ -100,7 +117,7 @@ class App extends Component {
       type:'POST',
       data: { typeOfDestination: res },
       success: function(data) {
-        console.log(data);
+        // console.log(data);
         context.setState({contentForDestination: data});
       }.bind(this),
       error: function(err) {
@@ -119,7 +136,7 @@ class App extends Component {
         destinationValue: destinationValue
       },
       success: function(data) {
-        console.log(data);
+        // console.log(data);
       }.bind(this),
       error: function(err) {
         console.log('error occurred on AJAX');
@@ -129,9 +146,9 @@ class App extends Component {
 
   render() {
     let currentLocation = this.state.currentLocation;
-    console.log("currentLocation: ",currentLocation);
+    // console.log("currentLocation: ",currentLocation);
 
-    console.log("cookies",cookies.get('type'));
+    // console.log("cookies",cookies.get('type'));
     if(cookies.get('type')=='guest') {
       typeOptions = [
        {key:"places",text:"places",value:"places"},
@@ -141,15 +158,16 @@ class App extends Component {
 
       return (
         <div>
-          {this.state.homeView?
-            <div><div><Input value="Your Current Location" fluid disabled/></div>
+
+            <div><Input value="Your Current Location" fluid disabled/></div>
             <Menu>
               <Dropdown onChange={this.updateContent} icon='world' pointing className='link item' options={typeOptions} />
               <Dropdown selection fluid placeholder='your Destination' pointing className='link item' options={this.state.contentForDestination} />
             </Menu>
-            <Button content='Go' primary style={{float:"right"}} onClick={this.navigate}/>
+            <Button fluid content='Go' primary style={{float:"right"}} onClick={this.navigate}/>
             <br /><br /><br />
-            <Grid>
+            {this.state.homeView?
+              <Grid>
               <Grid.Row only='mobile'>
                   <Grid.Column width={16} >
                     <MyMapComponent
@@ -163,11 +181,17 @@ class App extends Component {
                     />
                   </Grid.Column>
               </Grid.Row>
-            </Grid></div>
+            </Grid>
             :' '}
-            {this.state.SMEView?
-                <GoogleMapSME currentLocation={currentLocation}/>
+            {this.state.SMEView ?
+              <GoogleMapSME currentLocation={currentLocation}/>
               :' '}
+            {this.state.placesNavigationView ?
+              <GoogleMapNavigation source={currentLocation} destination={{ lat: 12.8377777, lng: 77.6564414 }} placeName={"Tower 11, EC, BDC"} />:' '
+            }
+            {this.state.personsNavigationView ?
+              <GoogleMapNavigation source={currentLocation} destination={{  lat: 12.836461, lng:  77.656105 }} placeName={"Tower 11, EC, BDC"} />:' '
+            }
         </div>
     );
   }

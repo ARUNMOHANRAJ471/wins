@@ -45,9 +45,6 @@ export default class googleMapNavigation extends Component{
     return (
       <Grid>
       <Grid.Row only='mobile'>
-        {/* <Menu/> */}
-      </Grid.Row>
-      <Grid.Row only='mobile'>
           <Grid.Column width={16} >
             <MyMapComponent
               isMarkerShown
@@ -62,7 +59,7 @@ export default class googleMapNavigation extends Component{
             />
           </Grid.Column>
       </Grid.Row>
-      <Grid.Row style={{marginTop:"30%"}} only='mobile'>
+      <Grid.Row style={{}} only='mobile'>
         <Grid.Column width={2}></Grid.Column>
         {/* <Grid.Column width={12} style={{textAlign:"center", fontWeight:"normal", letterSpacing:"1px",fontFamily:"Open Sans"}} >
         <h1 style={{letterSpacing:"2px"}}>Google Map </h1>
