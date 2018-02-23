@@ -2,6 +2,7 @@
   {
     "name": "ram",
     "password": "ram",
+    "gender": "male",
     "mail": "ramvignesh06@gmail.com",
     "mobile": "8681803552",
     "skillset": ["react js", "node js", "neo4j"],
@@ -14,6 +15,7 @@
   {
     "name": "ksk",
     "password": "ksk",
+    "gender": "male",
     "mail": "",
     "mobile": "8310259076",
     "skillset": ["react js", "node js", "mongo"],
@@ -26,6 +28,7 @@
   {
     "name": "arun",
     "password": "arun",
+    "gender": "male",
     "mail": "",
     "mobile": "9585725806",
     "skillset": ["react js", "node js", "docker"],
@@ -38,6 +41,7 @@
   {
     "name": "santhosh",
     "password": "santhosh",
+    "gender": "male",
     "mail": "santhoshj025@gmail.com",
     "mobile": "9715205554",
     "skillset": ["angular 5", "aws"],
@@ -50,6 +54,7 @@
   {
     "name": "srikanth",
     "password": "srikanth",
+    "gender": "male",
     "mail": "",
     "mobile": "9959656462",
     "skillset": ["angular js", "ml"],

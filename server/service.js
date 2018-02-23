@@ -1,8 +1,9 @@
 const express = require('express');
 const path = require('path');
 const usersData = require('./db/users.json');
-const locationsData = require('./db/locations_two.json');
+const locationsData = require('./db/locations.json');
 const skillsData = require('./db/skillset.json');
+let fs = require('fs');
 
 let createApp = function() {
   const app = express();
@@ -15,6 +16,27 @@ let setupStaticRoutes = function(app) {
 };
 
 let setupAppRoutes = function(app) {
+  app.post('/location', function(req, res) {
+    console.log("response from a client", req.body.location);
+    fs.readFile("server/db/locations.json", 'utf8', function(err, data) {
+
+      console.log("data",data,"error",err);
+
+      var locationDetails = JSON.parse(data);
+      locationDetails.push(req.body.location);
+
+      locationDetails = JSON.stringify(locationDetails);
+
+      fs.writeFile("server/db/locations.json", locationDetails, function(err){
+        if(err == null) {
+          console.log("location details added");
+          res.send("success");
+        } else {
+          res.send("failed");
+        }
+      });
+    });
+  });
   return app;
 };
 
@@ -106,41 +128,11 @@ let setupWebpack = function(app) {
   return app;
 };
 
-let setupMongooseConnections = function() {
-  const mongoose = require('mongoose');
-  let mongoURL = 'mongodb://127.0.0.1:27017/db';
-
-  mongoose.connect(mongoURL);
-
-  mongoose.connection.on('connected', function () {
-    console.log('mongoose is now connected to ', mongoURL);
-
-
-    mongoose.connection.on('error', function (err) {
-      console.error('error in mongoose connection: ', err);
-    });
-
-    mongoose.connection.on('disconnected', function () {
-      console.log('mongoose is now disconnected.');
-    });
-
-    process.on('SIGINT', function () {
-      mongoose.connection.close(function () {
-        console.log(
-          'mongoose disconnected on process termination'
-          );
-        process.exit(0);
-      });
-    });
-  });
-};
-
 module.exports = {
   createApp,
   setupStaticRoutes,
   setupAppRoutes,
   setupRESTRoutes,
   setupMiddlewares,
-  setupMongooseConnections,
   setupWebpack
 };
