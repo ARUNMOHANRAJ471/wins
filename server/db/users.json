@@ -1,0 +1,62 @@
+[
+  {
+    "name": "ram",
+    "password": "ram",
+    "mail": "ramvignesh06@gmail.com",
+    "mobile": "8681803552",
+    "skillset": ["react js", "node js", "neo4j"],
+    "deskLocation": "tower 8, floor 2, b wing, cubicle 23",
+    "currentLocation": {
+      "lat": "",
+      "long": ""
+    }
+  },
+  {
+    "name": "ksk",
+    "password": "ksk",
+    "mail": "",
+    "mobile": "8310259076",
+    "skillset": ["react js", "node js", "mongo"],
+    "deskLocation": "tower 8, floor 2, b wing, cubicle 21",
+    "currentLocation": {
+      "lat": "",
+      "long": ""
+    }
+  },
+  {
+    "name": "arun",
+    "password": "arun",
+    "mail": "",
+    "mobile": "9585725806",
+    "skillset": ["react js", "node js", "docker"],
+    "deskLocation": "tower 8, floor 2, b wing, cubicle 17",
+    "currentLocation": {
+      "lat": "",
+      "long": ""
+    }
+  },
+  {
+    "name": "santhosh",
+    "password": "santhosh",
+    "mail": "santhoshj025@gmail.com",
+    "mobile": "9715205554",
+    "skillset": ["angular 5", "aws"],
+    "deskLocation": "tower 23, floor 2, cubicle 23",
+    "currentLocation": {
+      "lat": "",
+      "long": ""
+    }
+  },
+  {
+    "name": "srikanth",
+    "password": "srikanth",
+    "mail": "",
+    "mobile": "9959656462",
+    "skillset": ["angular js", "ml"],
+    "deskLocation": "tower 12, floor 2, cubicle 23",
+    "currentLocation": {
+      "lat": "",
+      "long": ""
+    }
+  }
+]
