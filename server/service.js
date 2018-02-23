@@ -101,8 +101,6 @@ let setupRESTRoutes = function(app) {
     });
   });
 
-
-
   return app;
 };
 
