@@ -16,7 +16,7 @@ let setupStaticRoutes = function(app) {
 let setupAppRoutes = function(app) {
   app.post('/location', function(req, res) {
     console.log("response from a client", req.body.location);
-    fs.readFile("server/db/locations_two.json", 'utf8', function(err, data) {
+    fs.readFile("server/db/locations.json", 'utf8', function(err, data) {
 
       console.log("data",data,"error",err);
 
@@ -25,7 +25,7 @@ let setupAppRoutes = function(app) {
 
       locationDetails = JSON.stringify(locationDetails);
 
-      fs.writeFile("server/db/locations_two.json", locationDetails, function(err){
+      fs.writeFile("server/db/locations.json", locationDetails, function(err){
         if(err == null) {
           console.log("location details added");
           res.send("success")
@@ -53,7 +53,6 @@ let setupRESTRoutes = function(app) {
       }
     }
   });
-
 
   app.use(function (req, res) {
     let err = new Error('resource not found');

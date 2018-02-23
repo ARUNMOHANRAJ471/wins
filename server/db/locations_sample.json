@@ -1,0 +1,28 @@
+[
+  {
+    "tower": "8",
+    "floor": "2",
+    "wing": "B",
+    "room": "NA",
+    "cubicle": "21",
+    "lat": "",
+    "long": "",
+    "type": "odc"
+  },
+  {
+    "tower": "8",
+    "floor": "2",
+    "wing": "B",
+    "room": "Leo",
+    "cubicle": "NA",
+    "lat": "",
+    "long": "",
+    "type": "conference room"
+  },
+  {
+    "name": "bears",
+    "type": "cafeteria",
+    "lat": "",
+    "long": ""
+  }
+]
