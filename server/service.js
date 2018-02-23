@@ -61,13 +61,13 @@ let setupRESTRoutes = function(app) {
     if(typeOfDestination == 'places') {
       let placesArr = [];
       for (var i = 0; i < locationsData.length; i++) {
-        let dataForPlace = 'Tower '+locationsData[i].tower+' floor '+locationsData[i].floor+' '+locationsData[i].room;
+        let dataForPlace = 'Tower '+locationsData[i].tower+', floor '+locationsData[i].floor+', '+locationsData[i].room;
         placesArr.push({key:dataForPlace,text:dataForPlace,value:dataForPlace});
         if(locationsData.length-1 == i) {
           res.send(placesArr);
         }
       }
-    }else if(typeOfDestination == 'persons') {
+    } else if(typeOfDestination == 'persons') {
       let personsArr = [];
       for (var i = 0; i < usersData.length; i++) {
         personsArr.push({key:usersData[i].name,text:usersData[i].name,value:usersData[i].name});
@@ -75,7 +75,7 @@ let setupRESTRoutes = function(app) {
           res.send(personsArr);
         }
       }
-    }else if(typeOfDestination == 'SME') {
+    } else if(typeOfDestination == 'SME') {
       let skillsArr = [];
       for (var i = 0; i < skillsData.length; i++) {
         skillsArr.push({key:skillsData[i],text:skillsData[i],value:skillsData[i]});
@@ -83,6 +83,43 @@ let setupRESTRoutes = function(app) {
           res.send(skillsArr);
         }
       }
+    }
+  });
+
+  app.post('/coordinates', function(req, res) {
+    console.log('/coordinates: ', JSON.stringify(req.body));
+    let { typeOfDestination, destinationValue, currentLocation } = req.body;
+    if(typeOfDestination == 'places') {
+      let chunks = destinationValue.split(',');
+      let tower = chunks[0].split(' ')[1];
+      let floor = chunks[1].split(' ')[2];
+      let room = chunks[2];
+      let location = locationsData.find(item => {
+        return (
+          item.tower.trim() == tower.trim() &&
+          item.floor.trim() == floor.trim() &&
+          item.room.trim() == room.trim()
+        );
+      });
+      res.send({
+        location: {
+          lat: location.lat,
+          lng: location.lng
+        }
+      });
+    } else if(typeOfDestination == 'persons') {
+      let deskLocation = usersData.find(item => item.name == destinationValue).deskLocation;
+      console.log('deskLocation: ', JSON.stringify(deskLocation));
+      res.send({ location: deskLocation });
+    } else if(typeOfDestination == 'SME') {
+      let usersFound = [];
+      usersData.map(item => {
+        if(item.skillset.includes(destinationValue)) {
+          delete item.password;
+          usersFound.push(item);
+        }
+      });
+      res.send(usersFound);
     }
   });
 
@@ -100,8 +137,6 @@ let setupRESTRoutes = function(app) {
       error: err.message
     });
   });
-
-
 
   return app;
 };
@@ -127,6 +162,24 @@ let setupWebpack = function(app) {
   }));
   return app;
 };
+
+let getDistanceFromLatLonInKm = function (lat1, lon1, lat2, lon2) {
+  let R = 6371; // Radius of the earth in km
+  let dLat = deg2rad(lat2-lat1);  // deg2rad below
+  let dLon = deg2rad(lon2-lon1);
+  let a =
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+    Math.sin(dLon/2) * Math.sin(dLon/2)
+    ;
+  let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  let d = R * c; // Distance in km
+  return d;
+}
+
+let deg2rad = function (deg) {
+  return deg * (Math.PI/180)
+}
 
 module.exports = {
   createApp,

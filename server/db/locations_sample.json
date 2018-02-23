@@ -6,7 +6,7 @@
     "room": "NA",
     "cubicle": "21",
     "lat": "",
-    "long": "",
+    "lng": "",
     "type": "odc"
   },
   {
@@ -16,13 +16,13 @@
     "room": "Leo",
     "cubicle": "NA",
     "lat": "",
-    "long": "",
+    "lng": "",
     "type": "conference room"
   },
   {
     "name": "bears",
     "type": "cafeteria",
     "lat": "",
-    "long": ""
+    "lng": ""
   }
 ]

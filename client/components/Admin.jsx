@@ -20,29 +20,14 @@ class Admin extends Component {
       floor: "",
       wing: "",
       room: "",
-      type: "",
-      lat:"",
-      long:""
+      type: ""
     };
     this.toast = this.toast.bind(this);
     this.onConfirm = this.onConfirm.bind(this);
   }
 
-  componentWillMount() {
-    let context = this;
-    // console.log("navigator: ", navigator);
-    if("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-        let { latitude, longitude } = position.coords;
-        context.setState({lat: latitude, long: longitude});
-      });
-    } else {
-      console.log('not available');
-    }
-  }
-
   toast(message) {
-    this.refs.asd.warning(
+    this.refs.asd.success(
       message,
       '', {
         timeOut: 3000,
@@ -52,29 +37,39 @@ class Admin extends Component {
   }
 
   onConfirm() {
-    let { tower, floor, wing, room, type, lat, long } = this.state;
+    let context = this;
+    let { tower, floor, wing, room, type } = context.state;
 
-    let location = {
-      tower: type.toLowerCase(),
-      floor: floor.toLowerCase(),
-      wing: wing.toLowerCase(),
-      room: room.toLowerCase(),
-      lat: lat,
-      long: long,
-      type: type.toLowerCase()
-    };
-    request.post("/location").send({location:location}).end((err, res) => {
-      if(res.text == "success") {
-        this.setState({
-          tower: "", floor: "", wing: "", room: "",
-          lat:"", long:"", type: ""
+    // console.log("navigator: ", navigator);
+    if("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        let { latitude, longitude } = position.coords;
+
+        let location = {
+          tower: type.toLowerCase(),
+          floor: floor.toLowerCase(),
+          wing: wing.toLowerCase(),
+          room: room.toLowerCase(),
+          lat: latitude,
+          lng: longitude,
+          type: type.toLowerCase()
+        };
+        request.post("/location").send({location: location}).end((err, res) => {
+          if(res.text == "success") {
+            context.setState({
+              tower: "", floor: "", wing: "",
+              room: "", type: ""
+            });
+            context.toast(`${latitude} : ${longitude}`);
+          } else {
+            context.toast('Location addition failed!');
+          }
         });
-        this.toast(`${lat} : ${long}`);
-      } else {
-        console.log("error failed in db");
-        this.toast('Location addition failed!');
-      }
-    });
+
+      });
+    } else {
+      console.log('not available');
+    }
   }
 
   render() {
@@ -116,7 +111,6 @@ class Admin extends Component {
         <Grid.Column width={2}></Grid.Column>
       </Grid.Row>
 
-
       <Grid.Row style={{marginTop:"2%"}} only='mobile'>
         <Grid.Column width={2}></Grid.Column>
         <Grid.Column width={12}> <center><Button fluid style={{
@@ -131,12 +125,10 @@ class Admin extends Component {
 
       <Grid.Row only='mobile'>
         <ToastContainer ref='asd'
-            toastMessageFactory={ToastMessageFactory}
-            className='toast-top-left' />
+          toastMessageFactory={ToastMessageFactory}
+          className='toast-bottom-center' />
       </Grid.Row>
     </Grid>
-
-
     );
   }
 

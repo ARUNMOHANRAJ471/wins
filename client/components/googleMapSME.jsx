@@ -20,7 +20,7 @@ var circleIcon = {
     fillColor: 'green',
     fillOpacity: 15,
     scale: 2,
-    strokeColor: 'blue',
+    strokeColor: 'red',
     strokeWeight: 14
   };
 const MyMapComponent = withScriptjs(withGoogleMap((props) =>
@@ -41,17 +41,18 @@ export default class GoogleMapSME extends Component{
     super(props);
     this.state = {
       SMELocations:[
-        { lat: 53.593745, lng: -113.529274 },
-        { lat: 53.593745, lng: -113.528274 },
-        { lat: 53.593145, lng: -113.529274 }
+        { lat: 12.8377777, lng: 77.6564414 },  //tower 11
+        { lat: 12.8377877, lng: 77.6574414  },
+        { lat: 12.836461, lng:  77.656105 }
       ],
-      currentLocation:{ lat: 53.593591, lng: -113.528887 },
+      currentLocation:{lat: 12.9715987, lng: 77.5945627},
       SMEView:true,
       navigateView:false,
       destination:{}
     }
     this.navigateTo = this.navigateTo.bind(this);
   }
+
   navigateTo(position,placeName){
     this.setState({
       SMEView:false,
@@ -62,7 +63,7 @@ export default class GoogleMapSME extends Component{
   }
   render(){
     let SMELocations = this.state.SMELocations;
-    let currentLocation = this.state.currentLocation;
+    let currentLocation = this.props.currentLocation;
     let destination = this.state.destination;
     let placeName = this.state.placeName;
     let { SMEView, navigateView } = this.state;
@@ -87,7 +88,7 @@ export default class GoogleMapSME extends Component{
       :' '}
       {navigateView ?
         <Grid.Row only='mobile'>
-            <Grid.Column width={16} style={{marginBottom:"30%"}}>
+            <Grid.Column width={16} style={{}}>
                <GoogleMapNavigation source={currentLocation} destination={destination} placeName={placeName} />
              </Grid.Column>
          </Grid.Row>
