@@ -51,7 +51,7 @@ class Admin extends Component {
           wing: wing.toLowerCase(),
           room: room.toLowerCase(),
           lat: latitude,
-          long: longitude,
+          lng: longitude,
           type: type.toLowerCase()
         };
         request.post("/location").send({location: location}).end((err, res) => {

@@ -8,30 +8,30 @@
     "skillset": ["react js", "node js", "neo4j"],
     "deskLocation":{
       "name": "tower 8, floor 2, b wing, cubicle 23",
-      "lat": "",
-      "lng": ""
+      "lat": "12.8367416",
+      "lng": "77.6569854"
     }
   },
   {
     "name": "ksk",
     "password": "ksk",
     "gender": "male",
-    "mail": "",
+    "mail": "ksk@mailinator.com",
     "mobile": "8310259076",
     "skillset": ["react js", "node js", "mongo"],
     "deskLocation":{
       "name": "tower 8, floor 2, b wing, cubicle 21",
-      "lat": "",
-      "lng": ""
+      "lat": "12.8372208",
+      "lng": "77.6563988"
     }
   },
   {
     "name": "arun",
     "password": "arun",
     "gender": "male",
-    "mail": "",
+    "mail": "arun@mailinator.com",
     "mobile": "9585725806",
-    "skillset": ["react js", "node js", "docker"],
+    "skillset": ["jenkins", "docker"],
     "deskLocation":{
       "name": "tower 8, floor 2, b wing, cubicle 17",
       "lat": "",
@@ -47,21 +47,21 @@
     "skillset": ["angular 5", "aws"],
     "deskLocation":{
       "name": "tower 23, floor 2, cubicle 23",
-      "lat": "",
-      "lng": ""
+      "lat": "12.837366",
+      "lng": "77.6562288"
     }
   },
   {
     "name": "srikanth",
     "password": "srikanth",
     "gender": "male",
-    "mail": "",
+    "mail": "srikanth@mailinator.com",
     "mobile": "9959656462",
     "skillset": ["angular js", "ml"],
     "deskLocation":{
       "name": "tower 12, floor 2, cubicle 23",
-      "lat": "",
-      "lng": ""
+      "lat": "12.837366",
+      "lng": "77.6562288"
     }
   }
 ]
