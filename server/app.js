@@ -1,7 +1,7 @@
 const service = require('./service');
 
 function welcome() {
-  process.stdout.write('\n=========== Boilerplate ===========\n');
+  process.stdout.write('\n=========== WINS ===========\n');
 }
 
 module.exports = function () {
@@ -12,6 +12,5 @@ module.exports = function () {
   app = service.setupMiddlewares(app);
   app = service.setupAppRoutes(app);
   app = service.setupRESTRoutes(app);
-  // service.setupMongooseConnections();
   return app;
 };

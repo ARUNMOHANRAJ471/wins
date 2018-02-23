@@ -1,6 +1,8 @@
 const express = require('express');
 const path = require('path');
 const usersData = require('./db/users.json');
+const locationsData = require('./db/locations.json');
+const skillsData = require('./db/skillset.json');
 let fs = require('fs');
 
 let createApp = function() {
@@ -16,7 +18,7 @@ let setupStaticRoutes = function(app) {
 let setupAppRoutes = function(app) {
   app.post('/location', function(req, res) {
     console.log("response from a client", req.body.location);
-    fs.readFile("server/db/locations_two.json", 'utf8', function(err, data) {
+    fs.readFile("server/db/locations.json", 'utf8', function(err, data) {
 
       console.log("data",data,"error",err);
 
@@ -25,15 +27,15 @@ let setupAppRoutes = function(app) {
 
       locationDetails = JSON.stringify(locationDetails);
 
-      fs.writeFile("server/db/locations_two.json", locationDetails, function(err){
+      fs.writeFile("server/db/locations.json", locationDetails, function(err){
         if(err == null) {
           console.log("location details added");
-          res.send("success")
+          res.send("success");
         } else {
           res.send("failed");
         }
-      })
-    })
+      });
+    });
   });
   return app;
 };
@@ -54,6 +56,35 @@ let setupRESTRoutes = function(app) {
     }
   });
 
+  app.post('/updateContent', function(req, res) {
+    let typeOfDestination = req.body.typeOfDestination;
+    if(typeOfDestination == 'places') {
+      let placesArr = [];
+      for (var i = 0; i < locationsData.length; i++) {
+        let dataForPlace = 'Tower '+locationsData[i].tower+' floor '+locationsData[i].floor+' '+locationsData[i].room;
+        placesArr.push({key:dataForPlace,text:dataForPlace,value:dataForPlace});
+        if(locationsData.length-1 == i) {
+          res.send(placesArr);
+        }
+      }
+    }else if(typeOfDestination == 'persons') {
+      let personsArr = [];
+      for (var i = 0; i < usersData.length; i++) {
+        personsArr.push({key:usersData[i].name,text:usersData[i].name,value:usersData[i].name});
+        if(usersData.length-1 == i) {
+          res.send(personsArr);
+        }
+      }
+    }else if(typeOfDestination == 'SME') {
+      let skillsArr = [];
+      for (var i = 0; i < skillsData.length; i++) {
+        skillsArr.push({key:skillsData[i],text:skillsData[i],value:skillsData[i]});
+        if(skillsData.length-1 == i) {
+          res.send(skillsArr);
+        }
+      }
+    }
+  });
 
   app.use(function (req, res) {
     let err = new Error('resource not found');
@@ -69,8 +100,6 @@ let setupRESTRoutes = function(app) {
       error: err.message
     });
   });
-
-
 
   return app;
 };
@@ -97,41 +126,11 @@ let setupWebpack = function(app) {
   return app;
 };
 
-let setupMongooseConnections = function() {
-  const mongoose = require('mongoose');
-  let mongoURL = 'mongodb://127.0.0.1:27017/db';
-
-  mongoose.connect(mongoURL);
-
-  mongoose.connection.on('connected', function () {
-    console.log('mongoose is now connected to ', mongoURL);
-
-
-    mongoose.connection.on('error', function (err) {
-      console.error('error in mongoose connection: ', err);
-    });
-
-    mongoose.connection.on('disconnected', function () {
-      console.log('mongoose is now disconnected.');
-    });
-
-    process.on('SIGINT', function () {
-      mongoose.connection.close(function () {
-        console.log(
-          'mongoose disconnected on process termination'
-          );
-        process.exit(0);
-      });
-    });
-  });
-};
-
 module.exports = {
   createApp,
   setupStaticRoutes,
   setupAppRoutes,
   setupRESTRoutes,
   setupMiddlewares,
-  setupMongooseConnections,
   setupWebpack
 };
