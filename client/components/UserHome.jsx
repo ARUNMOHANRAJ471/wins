@@ -30,11 +30,12 @@ class App extends Component {
   }
 
   getLocation() {
+    let context = this;
     if("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(function(position) {
         let { latitude, longitude } = position.coords;
-        console.log("current location captured");
-        this.setState({ latitude, longitude });
+        console.log("current location captured",latitude, longitude);
+        context.setState({ latitude, longitude });
       });
     } else {
       console.log("not available");
@@ -80,6 +81,12 @@ class App extends Component {
 
   render() {
     console.log("cookies",cookies.get('type'));
+    if(cookies.get('type')=='guest') {
+      typeOptions = [
+       {key:"places",text:"places",value:"places"},
+       {key:"persons",text:"persons",value:"persons"}
+     ];
+    }
       return (
         <div>
           <div><Input value="Your Current Location" fluid disabled/></div>

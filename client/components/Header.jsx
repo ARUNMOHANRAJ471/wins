@@ -16,6 +16,7 @@ export default class headercomponent extends Component{
    event.preventDefault();
    cookies.remove("type");
    hashHistory.push("/");
+   location.reload();
 }
 
 
