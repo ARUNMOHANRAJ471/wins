@@ -1,6 +1,8 @@
 const express = require('express');
 const path = require('path');
 const usersData = require('./db/users.json');
+let fs = require('fs');
+
 let createApp = function() {
   const app = express();
   return app;
@@ -12,6 +14,27 @@ let setupStaticRoutes = function(app) {
 };
 
 let setupAppRoutes = function(app) {
+  app.post('/location', function(req, res) {
+    console.log("response from a client", req.body.location);
+    fs.readFile("server/db/locations_two.json", 'utf8', function(err, data) {
+
+      console.log("data",data,"error",err);
+
+      var locationDetails = JSON.parse(data);
+      locationDetails.push(req.body.location);
+
+      locationDetails = JSON.stringify(locationDetails);
+
+      fs.writeFile("server/db/locations_two.json", locationDetails, function(err){
+        if(err == null) {
+          console.log("location details added");
+          res.send("success")
+        } else {
+          res.send("failed");
+        }
+      })
+    })
+  });
   return app;
 };
 
