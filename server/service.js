@@ -28,12 +28,12 @@ let setupAppRoutes = function(app) {
       fs.writeFile("server/db/locations.json", locationDetails, function(err){
         if(err == null) {
           console.log("location details added");
-          res.send("success")
+          res.send("success");
         } else {
           res.send("failed");
         }
-      })
-    })
+      });
+    });
   });
   return app;
 };
@@ -96,41 +96,11 @@ let setupWebpack = function(app) {
   return app;
 };
 
-let setupMongooseConnections = function() {
-  const mongoose = require('mongoose');
-  let mongoURL = 'mongodb://127.0.0.1:27017/db';
-
-  mongoose.connect(mongoURL);
-
-  mongoose.connection.on('connected', function () {
-    console.log('mongoose is now connected to ', mongoURL);
-
-
-    mongoose.connection.on('error', function (err) {
-      console.error('error in mongoose connection: ', err);
-    });
-
-    mongoose.connection.on('disconnected', function () {
-      console.log('mongoose is now disconnected.');
-    });
-
-    process.on('SIGINT', function () {
-      mongoose.connection.close(function () {
-        console.log(
-          'mongoose disconnected on process termination'
-          );
-        process.exit(0);
-      });
-    });
-  });
-};
-
 module.exports = {
   createApp,
   setupStaticRoutes,
   setupAppRoutes,
   setupRESTRoutes,
   setupMiddlewares,
-  setupMongooseConnections,
   setupWebpack
 };
