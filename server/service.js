@@ -1,6 +1,9 @@
 const express = require('express');
 const path = require('path');
 const usersData = require('./db/users.json');
+const locationsData = require('./db/locations_two.json');
+const skillsData = require('./db/skillset.json');
+
 let createApp = function() {
   const app = express();
   return app;
@@ -31,6 +34,35 @@ let setupRESTRoutes = function(app) {
     }
   });
 
+  app.post('/updateContent', function(req, res) {
+    let typeOfDestination = req.body.typeOfDestination;
+    if(typeOfDestination == 'places') {
+      let placesArr = [];
+      for (var i = 0; i < locationsData.length; i++) {
+        let dataForPlace = 'Tower '+locationsData[i].tower+' floor '+locationsData[i].floor+' '+locationsData[i].room;
+        placesArr.push({key:dataForPlace,text:dataForPlace,value:dataForPlace});
+        if(locationsData.length-1 == i) {
+          res.send(placesArr);
+        }
+      }
+    }else if(typeOfDestination == 'persons') {
+      let personsArr = [];
+      for (var i = 0; i < usersData.length; i++) {
+        personsArr.push({key:usersData[i].name,text:usersData[i].name,value:usersData[i].name});
+        if(usersData.length-1 == i) {
+          res.send(personsArr);
+        }
+      }
+    }else if(typeOfDestination == 'SME') {
+      let skillsArr = [];
+      for (var i = 0; i < skillsData.length; i++) {
+        skillsArr.push({key:skillsData[i],text:skillsData[i],value:skillsData[i]});
+        if(skillsData.length-1 == i) {
+          res.send(skillsArr);
+        }
+      }
+    }
+  });
 
   app.use(function (req, res) {
     let err = new Error('resource not found');
