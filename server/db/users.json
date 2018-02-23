@@ -6,10 +6,10 @@
     "mail": "ramvignesh06@gmail.com",
     "mobile": "8681803552",
     "skillset": ["react js", "node js", "neo4j"],
-    "deskLocation": "tower 8, floor 2, b wing, cubicle 23",
-    "currentLocation": {
+    "deskLocation":{
+      "name": "tower 8, floor 2, b wing, cubicle 23",
       "lat": "",
-      "long": ""
+      "lng": ""
     }
   },
   {
@@ -19,10 +19,10 @@
     "mail": "",
     "mobile": "8310259076",
     "skillset": ["react js", "node js", "mongo"],
-    "deskLocation": "tower 8, floor 2, b wing, cubicle 21",
-    "currentLocation": {
+    "deskLocation":{
+      "name": "tower 8, floor 2, b wing, cubicle 21",
       "lat": "",
-      "long": ""
+      "lng": ""
     }
   },
   {
@@ -32,10 +32,10 @@
     "mail": "",
     "mobile": "9585725806",
     "skillset": ["react js", "node js", "docker"],
-    "deskLocation": "tower 8, floor 2, b wing, cubicle 17",
-    "currentLocation": {
+    "deskLocation":{
+      "name": "tower 8, floor 2, b wing, cubicle 17",
       "lat": "",
-      "long": ""
+      "lng": ""
     }
   },
   {
@@ -45,10 +45,10 @@
     "mail": "santhoshj025@gmail.com",
     "mobile": "9715205554",
     "skillset": ["angular 5", "aws"],
-    "deskLocation": "tower 23, floor 2, cubicle 23",
-    "currentLocation": {
+    "deskLocation":{
+      "name": "tower 23, floor 2, cubicle 23",
       "lat": "",
-      "long": ""
+      "lng": ""
     }
   },
   {
@@ -58,10 +58,10 @@
     "mail": "",
     "mobile": "9959656462",
     "skillset": ["angular js", "ml"],
-    "deskLocation": "tower 12, floor 2, cubicle 23",
-    "currentLocation": {
+    "deskLocation":{
+      "name": "tower 12, floor 2, cubicle 23",
       "lat": "",
-      "long": ""
+      "lng": ""
     }
   }
 ]

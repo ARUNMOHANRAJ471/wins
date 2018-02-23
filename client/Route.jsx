@@ -5,6 +5,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import App from './components/Signin.jsx';
 import AdminHome from './components/Admin.jsx';
 import UserHome from './components/UserHome.jsx';
+import GoogleMapNavigation from './components/googleMapNavigation.jsx';
+import GoogleMapSME from './components/googleMapSME.jsx';
 import './styles/index.css';
 
 render(
@@ -14,6 +16,8 @@ render(
           <Route path= '/' component={App}/>
           <Route path= '/userHome' component={UserHome}/>
           <Route path= '/adminHome' component={AdminHome}/>
+          <Route path= '/SME' component={GoogleMapSME}/>
+          <Route path= '/navigate' component={GoogleMapNavigation}/>
       </div>
   </Router>
   </MuiThemeProvider>,
