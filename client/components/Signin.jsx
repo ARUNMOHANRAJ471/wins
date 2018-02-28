@@ -53,15 +53,19 @@ setCookieforGuest(){
   render(){
     return(
       <Grid className="signin">
-        <Menu secondary fluid style={{textAlign:"center",height:"55px",fontFamily:"Open Sans", color:"white", backgroundColor:'lightblue'}}>
+        <Grid.Row only='mobile'>
+          <Grid.Column>
+            <Menu secondary fluid style={{textAlign:"center",height:"55px",fontFamily:"Open Sans", color:"white", backgroundColor:'lightblue'}}>
 
-             <Menu.Item>
-                <Image size='mini' rounded={true} src='/assets/images/wipro.jpg' />
-             </Menu.Item>
-             <Menu.Item>
-               <Header as='h2' color='blue'>WINS</Header>
-             </Menu.Item>
-         </Menu>
+                 <Menu.Item>
+                    <Image size='mini' rounded={true} src='/assets/images/wipro.jpg' />
+                 </Menu.Item>
+                 <Menu.Item>
+                   <Header as='h2' color='blue'>WINS</Header>
+                 </Menu.Item>
+             </Menu>
+          </Grid.Column>
+       </Grid.Row>
         <Grid.Row only='mobile'>
           <Grid.Column width={16} style={{fontWeight:"normal", letterSpacing:"2px",fontFamily:"Open Sans"}} ><Header textAlign='center' as='h2'  color='blue'>Wipro Internal Navigation System</Header></Grid.Column>
         </Grid.Row>

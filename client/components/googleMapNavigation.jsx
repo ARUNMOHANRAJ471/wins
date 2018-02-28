@@ -37,10 +37,10 @@ export default class googleMapNavigation extends Component{
     })
   }
   render() {
-    console.log('props.location: source', this.props.source);
-    console.log('props.location:destination ', this.props.destination);
-    let destination = this.state.destination;
-    let currentLocation = this.state.currentLocation;
+    // console.log('props.location: source', this.props.source);
+    // console.log('props.location:destination ', this.props.destination);
+    let currentLocation = this.props.source;
+    let destination = this.props.destination;
     let placeName = this.props.placeName;
     return (
       <Grid>
@@ -52,9 +52,9 @@ export default class googleMapNavigation extends Component{
               loadingElement={<div style={{ height: `100%` }} />}
               containerElement={<div style={{ height: `550px` }} />}
               mapElement={<div style={{ height: `100%` }} />}
-              destination = {destination}
-              currentLocation={currentLocation}
-              placeName = {placeName}
+              destination = {this.props.destination}
+              currentLocation={this.props.source}
+              placeName = {this.props.placeName}
               zoom={10}
             />
           </Grid.Column>

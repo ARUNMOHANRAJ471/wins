@@ -64,7 +64,9 @@ class App extends Component {
       navigator.geolocation.getCurrentPosition(function(position) {
         let { latitude, longitude } = position.coords;
         currentLocation = {lat: latitude, lng: longitude};
-        context.setState({currentLocation:{ lat: 12.8367416, lng: 77.6569854}});
+        // context.setState({currentLocation:{ lat: 12.8367416, lng: 77.6569854}});
+        context.setState({currentLocation:{ lat: latitude, lng: longitude}});
+        console.log("locaiton : ",latitude,longitude);
       });
       // console.log(this.state.currentLocation);
     } else {
@@ -126,17 +128,24 @@ class App extends Component {
     });
   }
 
-  getDestinationCoordinates() {
-    let { typeOfDestination, destinationValue } = this.state;
+  getDestinationCoordinates(e, a) {
+    let res = a.value;
+    let context = this;
+    this.setState({ destinationValue: res });
+    let { typeOfDestination } = this.state;
     $.ajax({
       url: "/coordinates",
       type:'POST',
       data: {
         typeOfDestination: typeOfDestination,
-        destinationValue: destinationValue
+        destinationValue: res
       },
       success: function(data) {
-        // console.log(data);
+        console.log(data.location.lat,data);
+        this.setState({
+          directionDestination:{lat:data.location.lat, lng: data.location.lng},
+          directionDestinationPlace:data.name
+        })
       }.bind(this),
       error: function(err) {
         console.log('error occurred on AJAX');
@@ -157,42 +166,49 @@ class App extends Component {
     }
 
       return (
-        <div>
+        <Grid>
+          <Grid.Row only='mobile'>
 
-            <div><Input value="Your Current Location" fluid disabled/></div>
-            <Menu>
-              <Dropdown onChange={this.updateContent} icon='world' pointing className='link item' options={typeOptions} />
-              <Dropdown selection fluid placeholder='your Destination' pointing className='link item' options={this.state.contentForDestination} />
-            </Menu>
-            <Button fluid content='Go' primary style={{float:"right"}} onClick={this.navigate}/>
-            <br /><br /><br />
+              <Grid.Column width={16} >
+
+                <div><Input value="Your Current Location" fluid disabled/></div>
+                <Menu>
+                  <Dropdown onChange={this.updateContent} icon='world' pointing className='link item' options={typeOptions} />
+                  <Dropdown selection fluid placeholder='your Destination' pointing className='link item' onChange={this.getDestinationCoordinates} options={this.state.contentForDestination} />
+                </Menu>
+                <Button fluid content='Go' primary style={{float:"right"}} onClick={this.navigate}/>
+
+                {/* <br /><br /><br /> */}
+              </Grid.Column>
+
+          </Grid.Row>
+          <Grid.Row only='mobile'>
+              <Grid.Column width={16} >
             {this.state.homeView?
-              <Grid>
-              <Grid.Row only='mobile'>
-                  <Grid.Column width={16} >
+
                     <MyMapComponent
                       isMarkerShown
                       googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWYd6MmYQML0hfPti_I1H3yP_NY_HvDQE&v=3.exp&libraries=geometry,drawing,places"
                       loadingElement={<div style={{ height: `100%` }} />}
                       containerElement={<div style={{ height: `550px` }} />}
                       mapElement={<div style={{ height: `100%` }} />}
-                      currentLocation={currentLocation}
+                      currentLocation={this.state.currentLocation}
                       zoom={18}
                     />
-                  </Grid.Column>
-              </Grid.Row>
-            </Grid>
+
             :' '}
             {this.state.SMEView ?
-              <GoogleMapSME currentLocation={currentLocation}/>
+              <GoogleMapSME currentLocation={this.state.currentLocation}/>
               :' '}
             {this.state.placesNavigationView ?
-              <GoogleMapNavigation source={currentLocation} destination={{ lat: 12.8377777, lng: 77.6564414 }} placeName={"Tower 11, EC, BDC"} />:' '
+              <GoogleMapNavigation source={this.state.currentLocation} destination={this.state.directionDestination} placeName={"Tower 11, EC, BDC"} />:' '
             }
             {this.state.personsNavigationView ?
-              <GoogleMapNavigation source={currentLocation} destination={{  lat: 12.836461, lng:  77.656105 }} placeName={"Tower 11, EC, BDC"} />:' '
+              <GoogleMapNavigation source={this.state.currentLocation} destination={this.state.directionDestination} placeName={this.state.directionDestinationPlace} />:' '
             }
-        </div>
+          </Grid.Column>
+      </Grid.Row>
+        </Grid>
     );
   }
 }

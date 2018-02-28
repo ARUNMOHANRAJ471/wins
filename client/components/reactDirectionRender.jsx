@@ -33,14 +33,14 @@ const MapWithADirectionsRenderer = compose(
 
 export default class ReactDirectionRender extends Component {
   componentWillMount(){
-    console.log("DirectionsRenderer calling");
+    // console.log("DirectionsRenderer calling");
         direction = {
           origin: this.props.source,
           destination:this.props.destination,
           travelMode:"WALKING"
         }
         console.log(direction);
-        console.log(this.props.source);
+        // console.log(this.props.source);
 
   }
   render() {
