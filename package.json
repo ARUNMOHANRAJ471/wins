@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node server/bin/www.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack"
   },
   "author": "Ramvignesh Pasupathy",
   "license": "ISC",
